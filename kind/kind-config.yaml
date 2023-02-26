@@ -1,0 +1,30 @@
+#kind create cluster --config kind-config.yaml
+#kompose convert --out /k8s
+#kubectl apply -f ./k8s/
+#kind delete cluster --name mlops
+
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: data-on-kubernetes
+nodes:
+  - role: control-plane
+    extraPortMappings:
+    - containerPort: 32100
+      hostPort: 32100
+      listenAddress: "0.0.0.0" # Optional, defaults to "0.0.0.0"
+      protocol: tcp # Optional, defaults to tcp
+    - containerPort: 32000
+      hostPort: 32000
+      listenAddress: "0.0.0.0" # Optional, defaults to "0.0.0.0"
+      protocol: tcp # Optional, defaults to tcp
+    - containerPort: 32001
+      hostPort: 32001
+      listenAddress: "0.0.0.0" # Optional, defaults to "0.0.0.0"
+      protocol: tcp # Optional, defaults to tcp
+    - containerPort: 32002
+      hostPort: 32002
+      listenAddress: "0.0.0.0" # Optional, defaults to "0.0.0.0"
+      protocol: tcp # Optional, defaults to tcp
+  - role: worker
+  - role: worker
+  - role: worker
