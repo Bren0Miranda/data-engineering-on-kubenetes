@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-consumer-app
+  namespace: kafka-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-consumer-app
+  template:
+    metadata:
+      labels:
+        app: kafka-consumer-app
+    spec:
+      containers:
+      - image: brenomiranda/kafka-consumer
+        name: kafka-consumer
+        resources:
+          limits:
+            cpu: 500m
+            memory: 128Mi
+          requests:
+            cpu: 250m
+            memory: 64Mi
+        env:
+        - name: BOOTSTRAP_SERVER
+          valueFrom:
+            configMapKeyRef:
+              name: kafka-consumer-app-configmap
+              key: bootstrap_server
+        - name: KAFKA_TOPIC
+          valueFrom:
+            configMapKeyRef:
+              name: kafka-consumer-app-configmap
+              key: kafka_topic
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kafka-consumer-app-configmap
+  namespace: kafka-app
+data:
+  bootstrap_server: strimzi-kafka-brokers.strimzi-kafka.svc.cluster.local
+  kafka_topic: users
