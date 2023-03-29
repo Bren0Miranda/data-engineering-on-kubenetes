@@ -8,16 +8,26 @@ kind-cluster-delete:
 
 ### K8S - Namespace ###
 k8s-namespace-create:
+	@kubectl create namespace monitoring
+
 	@kubectl create namespace strimzi-kafka
 	@kubectl create namespace kafka-ui
 	@kubectl create namespace kafka-app
 
+	
 ### Helm ###
 k8s-helm-repo-add:
+	@helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+
 	@helm repo add kafka-ui https://provectus.github.io/kafka-ui
 
 k8s-helm-install:
 	@helm install strimzi-kafka strimzi/strimzi-kafka-operator --namespace strimzi-kafka
+
+
+### Prometheus - Grafana ###
+k8s-prometheus-grafana:
+	@helm install prometheus-operator prometheus-community/kube-prometheus-stack --namespace monitoring 
 
 
 ### Strimzi - Kafka ###
@@ -29,7 +39,7 @@ k8s-kafka-ui:
 	@helm install kafka-ui kafka-ui/kafka-ui --set envs.config.KAFKA_CLUSTERS_0_NAME=data-on-k8s --set envs.config.KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=strimzi-kafka-bootstrap.strimzi-kafka.svc.cluster.local:9092 --namespace kafka-ui
 
 
-### Kafka - App##
+### Kafka - App ###
 k8s-kafka-app:
 	@kubectl apply -f k8s/kafka-app/kafka-producer.yaml
 	@kubectl apply -f k8s/kafka-app/kafka-consumer.yaml
