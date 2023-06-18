@@ -3,6 +3,10 @@ apiVersion: kind.x-k8s.io/v1alpha4
 name: data-on-k8s
 nodes:
   - role: control-plane
+    image: kindest/node:v1.24.13@sha256:cea86276e698af043af20143f4bf0509e730ec34ed3b7fa790cc0bea091bc5dd
   - role: worker
+    image: kindest/node:v1.24.13@sha256:cea86276e698af043af20143f4bf0509e730ec34ed3b7fa790cc0bea091bc5dd
   - role: worker
+    image: kindest/node:v1.24.13@sha256:cea86276e698af043af20143f4bf0509e730ec34ed3b7fa790cc0bea091bc5dd
   - role: worker
+    image: kindest/node:v1.24.13@sha256:cea86276e698af043af20143f4bf0509e730ec34ed3b7fa790cc0bea091bc5dd

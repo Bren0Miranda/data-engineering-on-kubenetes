@@ -1,0 +1,110 @@
+replicaCount: 1
+
+image:
+  registry: docker.io
+  repository: provectuslabs/kafka-ui
+  pullPolicy: IfNotPresent
+  tag: "v0.7.0"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+existingConfigMap: ""
+yamlApplicationConfig:
+  kafka:
+    clusters:
+      - name: data-on-k8s
+        bootstrapServers: strimzi-kafka-brokers.strimzi-kafka.svc.cluster.local:9092
+  spring:
+    security:
+      oauth2:
+  auth:
+    type: disabled
+  management:
+    health:
+      ldap:
+        enabled: false
+
+yamlApplicationConfigConfigMap: {}
+
+existingSecret: ""
+
+envs:
+  secret: {}
+  config: {}
+
+networkPolicy:
+  enabled: false
+  egressRules:
+    customRules: []
+  ingressRules:
+    customRules: []
+
+podAnnotations: {}
+podLabels: {}
+
+annotations: {}
+
+probes:
+  useHttpsScheme: false
+
+podSecurityContext: {}
+
+securityContext: {}
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  annotations: {}
+  ingressClassName: ""
+  path: "/"
+  pathType: "Prefix"  
+  host: ""
+
+
+  tls:
+    enabled: false
+    secretName: ""
+
+  precedingPaths: []
+
+  succeedingPaths: []
+
+resources:
+  {}
+  # limits:
+  #   cpu: 200m
+  #   memory: 512Mi
+  # requests:
+  #   cpu: 200m
+  #   memory: 256Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+env: {}
+
+initContainers: {}
+
+volumeMounts: {}
+
+volumes: {}
